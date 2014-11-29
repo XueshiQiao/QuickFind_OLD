@@ -3,7 +3,7 @@
 //  QuickFind
 //
 //  Created by Joey on 11/29/14.
-//  Copyright (c) 2014 Fenice. All rights reserved.
+//  Copyright (c) 2014 www.joeyio.com. All rights reserved.
 //
 
 #import <AppKit/AppKit.h>
