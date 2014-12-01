@@ -15,8 +15,10 @@ Now with QuickFind, you just need to select something, and press CMD + F, QuickF
 #Install and configuration
 3 steps:
 
-1. Download the [latest release](https://github.com/qiaoxueshi/QuickFind/releases/), unpack it, and put `QuickFind.xcplugin` file to Xcode Plugin folder `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`, then restart Xcode. You will see `Quick Find` item in `Find` menu.
-
+1. Install QuickFind, open up your terminal and paste this:
+```
+    curl -fsSL https://raw.githubusercontent.com/qiaoxueshi/QuickFind/master/install.sh | sh
+```
 2. Remove defualt Find shortcut. Open `Xcode` - `Preferences` - `Key Binding`, remove Shortcut of 'Find' (default is CMD + F)  
 
 3. Add shortcut for QuickFind. Open `System Preferences` - `KeyBoard` - `Shortcuts` - `App Shortcuts`, add a shortcut for Qucick Find like this:
