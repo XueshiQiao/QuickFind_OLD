@@ -15,7 +15,7 @@ Now with QuickFind, you just need to select something, and press CMD + F, QuickF
 #Install and configuration
 3 steps:
 
-1. Download the [latest release](https://github.com/qiaoxueshi/QuickFind/releases/), unpack it, and put `QuickFind.xcplugin` file to Xcode Plugin folder `~//Library/Application Support/Developer/Shared/Xcode/Plug-ins`, then restart Xcode. You will see `Quick Find` item in `Find` menu.
+1. Download the [latest release](https://github.com/qiaoxueshi/QuickFind/releases/), unpack it, and put `QuickFind.xcplugin` file to Xcode Plugin folder `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`, then restart Xcode. You will see `Quick Find` item in `Find` menu.
 
 2. Remove defualt Find shortcut. Open `Xcode` - `Preferences` - `Key Binding`, remove Shortcut of 'Find' (default is CMD + F)  
 
@@ -25,5 +25,5 @@ Now with QuickFind, you just need to select something, and press CMD + F, QuickF
     When you open `Find` menu again, you will see:
 
     ![](https://raw.githubusercontent.com/qiaoxueshi/QuickFind/master/images/shortcut.png)
-
-4. Done, enjoy~ 
+    
+    Done, enjoy~ 
