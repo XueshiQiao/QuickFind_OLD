@@ -9,6 +9,11 @@
 #import "QuickFind.h"
 #import "IDEEditorContext.h"
 
+typedef NS_ENUM(NSUInteger, QuickFindType) {
+    QuickFindTypeSourceEditor = 0,
+    QuickFindTypeConsoleEditor = 1
+};
+
 static QuickFind *sharedPlugin;
 
 @interface QuickFind()
@@ -16,6 +21,7 @@ static QuickFind *sharedPlugin;
 @property (nonatomic, strong, readwrite) NSBundle *bundle;
 @property (nonatomic, copy) NSString *selectedText;
 @property (nonatomic, strong) NSMenuItem *menuItem;
+@property (nonatomic, assign) QuickFindType quickFindType;
 
 @end
 
@@ -41,10 +47,11 @@ static QuickFind *sharedPlugin;
 {
     if (self = [super init]) {
         // reference to plugin's bundle, for resource access
-        self.bundle = plugin;
+        _bundle = plugin;
+        
+        _quickFindType = QuickFindTypeSourceEditor;
         
         // Create menu items, initialize UI, etc.
-
         // Sample Menu Item:
         NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Find"];
         if (menuItem) {
@@ -53,13 +60,12 @@ static QuickFind *sharedPlugin;
             [actionMenuItem setTarget:self];
             [[menuItem submenu] addItem:actionMenuItem];
         }
-        self.menuItem = menuItem;
+        _menuItem = menuItem;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(selectionDidChange:)
                                                      name:NSTextViewDidChangeSelectionNotification
                                                    object:nil];
-
     }
     return self;
 }
@@ -71,26 +77,57 @@ static QuickFind *sharedPlugin;
 
 - (void)selectionDidChange: (NSNotification*) notification {
     if ([[notification object] isKindOfClass:[NSTextView class]]) {
-        NSTextView* textView = (NSTextView *)[notification object];
+        NSTextView* textView = (NSTextView *)[notification object]; //IDEConsoleTextView and DVTSourceTextView
         
-        NSArray* selectedRanges = [textView selectedRanges];
-        if (selectedRanges.count==0) {
-            return;
+        BOOL validTextView = NO;
+        if ([textView isKindOfClass:[DVTSourceTextView class]]) {
+            self.quickFindType = QuickFindTypeSourceEditor;
+            validTextView = YES;
+        } else if ([textView isKindOfClass:[IDEConsoleTextView class]]){
+            self.quickFindType = QuickFindTypeConsoleEditor;
+            validTextView = YES;
         }
         
-        NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];
-        self.selectedText = [textView.textStorage.string substringWithRange:selectedRange];
-        NSLog(@"=======Quick Find====== text: %@", self.selectedText);
+        if (validTextView) {
+            NSArray* selectedRanges = [textView selectedRanges];
+            if (selectedRanges.count > 0) {
+                NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];
+                if (selectedRange.length != 0) {
+                    self.selectedText = [textView.textStorage.string substringWithRange:selectedRange];
+                    NSLog(@"=======Quick Find====== text: %@", self.selectedText);
+                }
+            }
+        }
     }
 }
 
 - (void)doMenuAction {
-    IDEEditorContext *context = [self currentEditorContext];
-    DVTFindBar *findBar = [context _findBar];
-    findBar.findString = self.selectedText;
-    [context find:self.menuItem]; //show findbar and find, the paramater is sender
-    if (self.selectedText.length > 0) {
-        [context findNext:nil]; //highlight the next one
+    
+    
+    switch (self.quickFindType) {
+        case QuickFindTypeSourceEditor: {
+            IDEEditorContext *context = [self currentEditorContext];
+            DVTFindBar *findBar = [context _findBar];
+            findBar.findString = self.selectedText;
+            [context find:self.menuItem]; //show findbar and find, the paramater is sender
+            if (self.selectedText.length > 0) {
+                [context findNext:nil]; //highlight the next one
+            }
+        }
+            break;
+        case QuickFindTypeConsoleEditor: {
+            IDEConsoleArea *consoleArea = [self consoleArea];
+            DVTFindBar *findBar = [consoleArea _findBar:NO];
+            findBar.findString = self.selectedText;
+            [consoleArea find:self.menuItem]; //show findbar and find, the paramater is sender
+            if (self.selectedText.length > 0) {
+                [consoleArea findNext:nil]; //highlight the next one
+            }
+        }
+            
+            break;
+        default:
+            break;
     }
 
     //The code is so simple, ha? But actually it takes me 2+ hours to find it.
@@ -99,10 +136,20 @@ static QuickFind *sharedPlugin;
 - (IDEEditorContext *)currentEditorContext {
     NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
     if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
-        id workspaceController = (IDEWorkspaceWindowController *)currentWindowController;
-        id editorArea = [workspaceController editorArea];
-        id editorContext = [editorArea lastActiveEditorContext];
-        return editorContext;
+        IDEWorkspaceWindowController *workspaceController = (IDEWorkspaceWindowController *)currentWindowController;
+        IDEEditorArea *editorArea = (IDEEditorArea *)[workspaceController editorArea];
+        return [editorArea lastActiveEditorContext];
+    }
+    return nil;
+}
+
+- (IDEConsoleArea *)consoleArea {
+    NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
+    if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
+        IDEWorkspaceWindowController *workspaceController = (IDEWorkspaceWindowController *)currentWindowController;
+        IDEEditorArea *editorArea = (IDEEditorArea *)[workspaceController editorArea];
+        IDEDefaultDebugArea *debugArea = (IDEDefaultDebugArea *)editorArea.activeDebuggerArea;
+        return [debugArea consoleArea];
     }
     return nil;
 }

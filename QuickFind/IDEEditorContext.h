@@ -222,7 +222,7 @@
     DVTFindBar *_findBar;
 }
 
-- (id)editor; // returns the current editor. If the editor is the code editor, the class is `IDESourceCodeEditor`
+@property(retain, nonatomic) id editor; // returns the current editor(IDEEditor). If the editor is the code editor, the class is `IDESourceCodeEditor`
 
 - (void)replaceAndFindPrevious:(id)arg1;
 - (void)replaceAndFindNext:(id)arg1;
@@ -235,17 +235,67 @@
 - (id)_findScopeBar;
 - (id)_findBar;
 - (void)_installFindBar;
+@end
 
+
+@interface IDEDebugArea : NSObject
+
++ (id)createShowRightViewButton;
++ (id)createShowLeftViewButton;
+- (void)activateConsole;
+- (BOOL)canActivateConsole;
+- (void)clearConsole;
+- (BOOL)canClearConsole;
+@property(readonly) NSString *stateSavingIdentifier;
+@end
+
+@interface IDEConsoleArea : NSObject
+
+- (void)findPrevious:(id)arg1;
+- (void)findNext:(id)arg1;
+- (void)find:(id)arg1;
+
+- (id)_findBar:(BOOL)arg1;
+- (id)_createFindBar;
+- (void)_installFindBar;
+- (BOOL)_isFindBarInstalled;
 
 @end
 
+@interface IDEDefaultDebugArea : NSObject
+
+@property(readonly) IDEConsoleArea *consoleArea;
+
+@end
+
+
+@interface IDEConsoleTextView  : NSObject
+
+@end
+
+@interface DVTSourceTextView : NSObject
+
+@end
+
+
 @interface IDEEditorArea : NSObject
 - (IDEEditorContext *)lastActiveEditorContext;
+
+@property(retain) IDEDebugArea *activeDebuggerArea; // @synthesize activeDebuggerArea=_activeDebuggerArea;
+//@property(retain) IDEDebugBar *activeDebuggerBar; // @synthesize activeDebuggerBar=_activeDebuggerBar;
+
+@property(nonatomic) int versionEditorSubmode; // @synthesize versionEditorSubmode=_versionEditorSubmode;
+@property(nonatomic) int editorMode; // @synthesize editorMode=_editorMode
+
 @end
 
 @interface IDEWorkspaceWindowController : NSObject
 @property (readonly) IDEWorkspaceTabController *activeWorkspaceTabController;
+@property(readonly, getter=isInMiniDebuggingMode) BOOL inMiniDebuggingMode; // @synthesize inMiniDebuggingMode=_inMiniDebuggingMode;
+
 - (IDEEditorArea *)editorArea;
+
+
 @end
 
 @interface IDEWorkspace : NSObject
@@ -294,4 +344,6 @@
 - (id)copyWithZone:(struct _NSZone *)arg1;
 
 @end
+
+
 
