@@ -89,8 +89,10 @@ static QuickFind *sharedPlugin;
     DVTFindBar *findBar = [context _findBar];
     findBar.findString = self.selectedText;
     [context find:self.menuItem]; //show findbar and find, the paramater is sender
-    [context findNext:nil]; //highlight the next one
-    
+    if (self.selectedText.length > 0) {
+        [context findNext:nil]; //highlight the next one
+    }
+
     //The code is so simple, ha? But actually it takes me 2+ hours to find it.
 }
 
