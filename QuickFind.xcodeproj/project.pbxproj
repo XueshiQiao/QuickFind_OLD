@@ -7,21 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D8D7D4EF1A2A3833009A2C73 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8D7D4EE1A2A3833009A2C73 /* DVTFoundation.framework */; };
-		D8D7D4F11A2A384D009A2C73 /* DVTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8D7D4F01A2A384D009A2C73 /* DVTKit.framework */; };
-		D8D7D4F41A2A3861009A2C73 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8D7D4F21A2A3861009A2C73 /* IDEFoundation.framework */; };
-		D8D7D4F51A2A3861009A2C73 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8D7D4F31A2A3861009A2C73 /* IDEKit.framework */; };
+		D8AC6CD51A2CA79C0017B790 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F2F8131A2A1A2F00167888 /* Foundation.framework */; };
 		D8F2F8121A2A1A2F00167888 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F2F8111A2A1A2F00167888 /* AppKit.framework */; };
-		D8F2F8141A2A1A2F00167888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F2F8131A2A1A2F00167888 /* Foundation.framework */; };
 		D8F2F8191A2A1A2F00167888 /* QuickFind.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = D8F2F8181A2A1A2F00167888 /* QuickFind.xcscheme */; };
 		D8F2F81C1A2A1A2F00167888 /* QuickFind.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F2F81B1A2A1A2F00167888 /* QuickFind.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D8D7D4EE1A2A3833009A2C73 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
-		D8D7D4F01A2A384D009A2C73 /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTKit.framework; sourceTree = "<group>"; };
-		D8D7D4F21A2A3861009A2C73 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
-		D8D7D4F31A2A3861009A2C73 /* IDEKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEKit.framework; sourceTree = "<group>"; };
 		D8F2F80E1A2A1A2F00167888 /* QuickFind.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickFind.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F2F8111A2A1A2F00167888 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		D8F2F8131A2A1A2F00167888 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -38,11 +30,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8F2F8121A2A1A2F00167888 /* AppKit.framework in Frameworks */,
-				D8F2F8141A2A1A2F00167888 /* Foundation.framework in Frameworks */,
-				D8D7D4F11A2A384D009A2C73 /* DVTKit.framework in Frameworks */,
-				D8D7D4EF1A2A3833009A2C73 /* DVTFoundation.framework in Frameworks */,
-				D8D7D4F51A2A3861009A2C73 /* IDEKit.framework in Frameworks */,
-				D8D7D4F41A2A3861009A2C73 /* IDEFoundation.framework in Frameworks */,
+				D8AC6CD51A2CA79C0017B790 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,10 +57,6 @@
 		D8F2F8101A2A1A2F00167888 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D8D7D4F21A2A3861009A2C73 /* IDEFoundation.framework */,
-				D8D7D4F31A2A3861009A2C73 /* IDEKit.framework */,
-				D8D7D4F01A2A384D009A2C73 /* DVTKit.framework */,
-				D8D7D4EE1A2A3833009A2C73 /* DVTFoundation.framework */,
 				D8F2F8111A2A1A2F00167888 /* AppKit.framework */,
 				D8F2F8131A2A1A2F00167888 /* Foundation.framework */,
 			);

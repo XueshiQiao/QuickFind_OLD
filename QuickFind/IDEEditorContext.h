@@ -269,13 +269,13 @@
 @end
 
 
-@interface IDEConsoleTextView  : NSObject
+//@interface IDEConsoleTextView  : NSObject
+//
+//@end
 
-@end
-
-@interface DVTSourceTextView : NSObject
-
-@end
+//@interface DVTSourceTextView : NSObject
+//
+//@end
 
 
 @interface IDEEditorArea : NSObject

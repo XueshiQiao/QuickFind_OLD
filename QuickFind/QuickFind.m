@@ -80,10 +80,11 @@ static QuickFind *sharedPlugin;
         NSTextView* textView = (NSTextView *)[notification object]; //IDEConsoleTextView and DVTSourceTextView
         
         BOOL validTextView = NO;
-        if ([textView isKindOfClass:[DVTSourceTextView class]]) {
+        NSString *className = NSStringFromClass([textView class]);
+        if ([className isEqualToString:@"DVTSourceTextView"]) { // I do not use isKindOfClass method , just because I don't wanna include DVTKit.framework, it's too large (20+ M) for Alcatraz to download. (The plugin manager Alcatraz will clone the whole project with git, and build plugins locally, so if the project is very large, it would be very slow.)
             self.quickFindType = QuickFindTypeSourceEditor;
             validTextView = YES;
-        } else if ([textView isKindOfClass:[IDEConsoleTextView class]]){
+        } else if ([className isEqualToString:@"IDEConsoleTextView"]){ //IDEKit.framework is large too
             self.quickFindType = QuickFindTypeConsoleEditor;
             validTextView = YES;
         }
@@ -129,8 +130,6 @@ static QuickFind *sharedPlugin;
         default:
             break;
     }
-
-    //The code is so simple, ha? But actually it takes me 2+ hours to find it.
 }
 
 - (IDEEditorContext *)currentEditorContext {
